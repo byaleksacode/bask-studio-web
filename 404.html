@@ -57,6 +57,25 @@ h1{font-family:var(--gr);font-weight:400;font-size:clamp(28px,7vw,52px);line-hei
 .rv{opacity:0;transform:translateY(12px);animation:in .9s var(--ease) forwards}
 @keyframes in{to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}.num .ok{clip-path:inset(18% 0 0 0)}.num .fallo{clip-path:inset(0 0 82% 0);transform:translateX(.09em)}.noz{display:none}.rv{opacity:1;transform:none}}
+
+/* escritorio: todo en una pantalla, sin deslizar */
+@media(min-width:900px){
+  .app{height:100svh;min-height:0}
+  main{gap:clamp(10px,2.2svh,22px);padding-top:clamp(12px,3svh,32px);padding-bottom:clamp(12px,3svh,32px);min-height:0}
+  .num{font-size:min(30svh,360px)}
+  h1{font-size:min(5.4svh,48px)}
+  .sub{font-size:min(1.9svh,15px)}
+  .log{padding:min(1.2svh,10px) 0;gap:2px}
+}
+
+/* interacción */
+.num{background:none;border:0;color:inherit;cursor:pointer;padding:0;display:block}
+.num:hover .fallo{transform:translateX(.13em)!important;transition:transform .5s var(--ease)}
+.num:active .fallo{transform:translateX(.05em)!important}
+/* salida: las capas de la página se desplazan antes de ir al inicio */
+.saliendo main>*{animation:capas .55s var(--ease) forwards!important}
+.saliendo main>*:nth-child(odd){--dx:.6em}.saliendo main>*:nth-child(even){--dx:-.6em}
+@keyframes capas{0%{opacity:1;transform:none}40%{transform:translateX(var(--dx))}100%{opacity:0;transform:translateX(calc(var(--dx)*2))}}
 </style>
 </head>
 <body>
@@ -65,12 +84,12 @@ h1{font-family:var(--gr);font-weight:400;font-size:clamp(28px,7vw,52px);line-hei
 
   <main>
     <p class="k rv" style="animation-delay:.2s">Impresión fallida</p>
-    <div class="num" aria-label="404">
+    <button type="button" class="num" id="num" aria-label="Volver a imprimir el 404" title="Volver a imprimir">
       <span class="ghost" aria-hidden="true">404</span>
       <span class="ok" aria-hidden="true">404</span>
       <span class="fallo" aria-hidden="true">404</span>
       <span class="noz" aria-hidden="true"></span>
-    </div>
+    </button>
     <h1 class="rv" style="animation-delay:3.9s">Esta página se ha despegado de la cama.</h1>
     <p class="sub rv" style="animation-delay:4.05s">Hemos perdido el hilo en la última capa. La pieza que buscas no existe o se ha movido.</p>
     <div class="log rv" style="animation-delay:4.2s" aria-label="Registro de la impresora">
@@ -78,10 +97,32 @@ h1{font-family:var(--gr);font-weight:400;font-size:clamp(28px,7vw,52px);line-hei
       <div><span>Altura de capa</span><b>0,2 mm</b></div>
       <div class="err"><span>Estado</span><b>Desplazamiento de capa</b></div>
     </div>
-    <a class="btn rv" style="animation-delay:4.35s" href="/bask-studio-web/">Volver al inicio</a>
+    <a class="btn rv" id="volver" style="animation-delay:4.35s" href="/bask-studio-web/">Volver al inicio</a>
   </main>
 
   <footer><span>© 2026 BASK STUDIO</span><span>Fabricación aditiva</span></footer>
 </div>
+<script>
+(function(){
+  const reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const num=document.getElementById('num');
+  /* al pulsar el 404: se vuelve a imprimir desde la primera capa y falla otra vez */
+  num.addEventListener('click',()=>{
+    if(reduce)return;
+    num.querySelectorAll('.ok,.fallo,.noz').forEach(el=>{
+      el.style.animation='none';el.style.transform='';void el.offsetWidth;el.style.animation='';
+      if(el.classList.contains('ok'))el.style.animationDelay='0s';
+      if(el.classList.contains('noz'))el.style.animationDelay='0s,0s,3.2s';
+      if(el.classList.contains('fallo'))el.style.animationDelay='3.2s,3.25s';
+    });
+  });
+  /* volver al inicio con desplazamiento de capas */
+  document.getElementById('volver').addEventListener('click',e=>{
+    if(reduce)return;
+    e.preventDefault();const href=e.currentTarget.href;
+    document.body.classList.add('saliendo');setTimeout(()=>location.href=href,560);
+  });
+})();
+</script>
 </body>
 </html>
