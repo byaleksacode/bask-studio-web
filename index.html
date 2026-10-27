@@ -53,7 +53,6 @@ header{position:sticky;top:0;z-index:20;height:var(--head);background:var(--blan
 header nav{display:none}
 header nav a{display:flex;align-items:center;padding:0 8px;line-height:1}
 header nav a:hover{background:var(--fondo)}
-header nav a.activo{background:var(--verde);color:var(--blanco)}
 .logo{display:flex;align-items:center;font-family:var(--gr);font-weight:600;font-size:16px;letter-spacing:-.03em}
 .der{display:flex;align-items:center;padding:0 8px;margin-right:-8px}
 .der:hover{background:var(--fondo)}
@@ -343,7 +342,7 @@ footer{gap:clamp(120px,20svh,240px)}
 </div>
 
 <header>
-  <nav aria-label="Principal"><a class="activo" href="#inicio">Próximamente</a><a href="#contacto">Contacto</a></nav>
+  <nav aria-label="Principal"><a href="#contacto">Contacto</a></nav>
   <a class="logo" href="#inicio">BASK STUDIO</a>
   <button type="button" class="der menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="mt">Menú</span><span class="ham" aria-hidden="true"></span></button>
 </header>
