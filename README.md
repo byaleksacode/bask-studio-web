@@ -19,6 +19,5 @@ Settings → Pages → Deploy from a branch → `main` / raíz.
 ## Pendiente antes de publicar
 
 - Quitar `noindex` de `quienes-somos.html`.
-- Poner la dirección real de LinkedIn en el enlace del pie (`id="linkedin"`).
 - Rellenar los huecos marcados (`.pend`) de las tres páginas legales con los datos reales de la empresa y revisarlas con la gestoría.
 - Quitar `noindex` de las páginas legales.

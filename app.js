@@ -104,6 +104,18 @@
     addEventListener('keydown', (e) => { if (e.key === 'Escape') alternar(false); });
   }
 
+  /* ---------- Enlaces a «Contacto»: bajan al pie sin añadir #contacto a la dirección ---------- */
+  const pie = document.getElementById('contacto');
+
+  if (pie) {
+    document.querySelectorAll('a[href="#contacto"]').forEach((enlace) => {
+      enlace.addEventListener('click', (e) => {
+        e.preventDefault();
+        pie.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' });
+      });
+    });
+  }
+
   /* ---------- Aparición de bloques al entrar en pantalla ---------- */
   const observador = new IntersectionObserver((entradas) => {
     entradas.forEach((e) => {
