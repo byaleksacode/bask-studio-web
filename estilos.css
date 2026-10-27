@@ -1,5 +1,28 @@
 /* BASK STUDIO · hoja de estilos común a todas las páginas */
 
+/* ---------- Tipografías (alojadas en la propia web, licencia SIL OFL) ---------- */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/fonts/inter-latin-400-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/fonts/inter-tight-latin-400-normal.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Inter Tight';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/fonts/inter-tight-latin-600-normal.woff2) format('woff2');
+}
+
 /* ---------- Base ---------- */
 :root {
   color-scheme: light;
@@ -50,7 +73,7 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; cursor: pointer; }
 :focus-visible { outline: 1px solid var(--verde); outline-offset: 2px; }
 
-/* Aparición al hacer scroll (la clase .vista la añade app.js) */
+/* Aparición al hacer scroll en el pie (la clase .vista la añade app.js) */
 .rev {
   opacity: 0;
   transform: translateY(24px);
@@ -59,7 +82,17 @@ button { font: inherit; color: inherit; background: none; border: 0; cursor: poi
 .rev.vista { opacity: 1; transform: none; }
 
 
-/* ---------- Pantalla de entrada ---------- */
+/* ---------- Pantalla de entrada ----------
+   Solo se muestra la primera vez que se abre la portada en una sesión.
+   El script del <head> de index.html añade .intro; app.js añade .listo al terminar.
+   Sin .intro, todo aparece al instante, también al cambiar de página. */
+html:not(.intro) .loader { display: none; }
+.intro:not(.listo) header { transform: translateY(-100%); }
+.intro:not(.listo) .barra { transform: translateY(100%); }
+.intro:not(.listo) .abajo { opacity: 0; transform: translateY(16px); }
+.intro:not(.listo) .hero::before,
+.intro:not(.listo) .hero::after { opacity: 0; }
+
 .loader {
   position: fixed;
   inset: 0;
@@ -129,10 +162,8 @@ header {
   height: var(--head);
   padding: 0 var(--grr) 0 var(--gl);
   background: var(--blanco);
-  transform: translateY(-100%);
   transition: transform 1s var(--ease) .15s;
 }
-.listo header { transform: none; }
 
 header nav { display: none; }
 header nav a {
@@ -279,7 +310,6 @@ header nav a[aria-current="page"] { color: var(--verde); }
   content: "";
   position: absolute;
   z-index: -1;
-  opacity: 0;
   transition: opacity 1.2s linear .3s;
 }
 .hero::before {
@@ -296,8 +326,6 @@ header nav a[aria-current="page"] { color: var(--verde); }
   background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, .18) 30%, rgba(0, 0, 0, .52) 72%, rgba(0, 0, 0, .66) 100%);
   transition-delay: .5s;
 }
-.listo .hero::before,
-.listo .hero::after { opacity: 1; }
 
 .hero video {
   position: absolute;
@@ -320,11 +348,8 @@ header nav a[aria-current="page"] { color: var(--verde); }
   justify-items: center;
   padding: 0 0 clamp(28px, 6svh, 56px);
   color: var(--blanco);
-  opacity: 0;
-  transform: translateY(16px);
   transition: opacity .8s linear .85s, transform 1.1s var(--ease) .85s;
 }
-.listo .abajo { opacity: 1; transform: none; }
 
 .tit {
   font-family: var(--gr);
@@ -356,10 +381,8 @@ header nav a[aria-current="page"] { color: var(--verde); }
   margin: 0 calc(-1 * var(--grr)) 0 calc(-1 * var(--gl));
   padding: 8px var(--grr) 8px var(--gl);
   background: var(--blanco);
-  transform: translateY(100%);
   transition: transform 1s var(--ease) .35s;
 }
-.listo .barra { transform: none; }
 
 .b-links { display: flex; gap: 16px; }
 .b-links a {
@@ -440,15 +463,13 @@ header nav a[aria-current="page"] { color: var(--verde); }
 /* Las tres píldoras con imagen dentro del titular */
 .chip {
   display: inline-block;
-  width: 0;
+  width: 1.9em;
   height: .72em;
-  margin: 0 .04em;
   border-radius: 99px;
   background: center / 115% auto no-repeat;
   vertical-align: -.03em;
-  transition: width 1.2s var(--ease) .5s, background-size 1.1s var(--ease);
+  transition: background-size 1.1s var(--ease);
 }
-.qa-tit.vista .chip { width: 1.9em; }
 .c1 { background-image: url(assets/chip-verde.jpg); }
 .c2 { background-image: url(assets/chip-crudo.jpg); }
 .c3 { background-image: url(assets/chip-gris.jpg); }
@@ -479,9 +500,44 @@ header nav a[aria-current="page"] { color: var(--verde); }
     font-size: clamp(48px, 5.4vw, 100px);
     line-height: .98;
   }
-  .qa-tit.vista .chip { width: 1.5em; }
+  .chip { width: 1.5em; }
   .idn-p { max-width: 34em; font-size: clamp(20px, 1.7vw, 30px); }
   .idn-c { font-size: 16px; }
+}
+
+
+/* ---------- Páginas legales ---------- */
+.leg h1 {
+  font-family: var(--gr);
+  font-weight: 400;
+  font-size: clamp(36px, 10vw, 56px);
+  line-height: 1;
+  letter-spacing: -.045em;
+}
+.leg-txt {
+  display: grid;
+  gap: 14px;
+  max-width: 40em;
+  font-size: 16px;
+  line-height: 1.35;
+  letter-spacing: -.01em;
+}
+.leg-txt h2 {
+  margin-top: 18px;
+  font-family: var(--gr);
+  font-weight: 400;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: -.03em;
+}
+.leg-txt ul { padding-left: 1.1em; display: grid; gap: 8px; }
+.leg-txt a { text-decoration: underline; text-underline-offset: 2px; }
+.leg-txt a:hover { color: var(--verde); }
+/* Huecos por rellenar antes de publicar */
+.pend { background: rgba(0, 96, 57, .12); color: inherit; }
+
+@media (min-width: 1120px) {
+  .leg h1 { font-size: clamp(48px, 4.4vw, 80px); }
 }
 
 
@@ -505,6 +561,10 @@ footer {
   line-height: .9;
   letter-spacing: -.05em;
 }
+
+.f-bajo { display: grid; gap: 28px; }
+.f-legal { display: flex; flex-wrap: wrap; gap: 6px 16px; font-size: 12px; }
+.f-legal a:hover { color: var(--verde); }
 
 .f-grid {
   display: grid;
@@ -563,6 +623,8 @@ footer {
 .cookies.adios { transform: translateY(20px) scale(.96); opacity: 0; pointer-events: none; }
 
 .cookies p { font-size: 12px; line-height: 1.35; letter-spacing: -.005em; }
+.cookies p a { text-decoration: underline; text-underline-offset: 2px; }
+.cookies p a:hover { color: var(--verde); }
 .cookies .bt { display: flex; gap: 14px; }
 .cookies button {
   text-decoration: underline;

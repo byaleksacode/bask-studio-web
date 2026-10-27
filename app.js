@@ -2,6 +2,7 @@
 (function () {
   'use strict';
 
+  const raiz = document.documentElement;
   const body = document.body;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
@@ -11,23 +12,14 @@
     poner(area, clave, valor) { try { window[area].setItem(clave, valor); } catch (e) { /* sin almacenamiento */ } }
   };
 
-  /* ---------- Pantalla de entrada (solo en la portada) ---------- */
+  /* ---------- Pantalla de entrada (solo en la portada, la primera vez) ---------- */
   const loader = document.getElementById('ld');
-  const yaVista = guardado.leer('sessionStorage', 'bask-intro') === '1';
-  const hayEntrada = Boolean(loader) && !reduce && !yaVista;
-  const listo = () => body.classList.add('listo');
+  const hayEntrada = raiz.classList.contains('intro');
+  const listo = () => raiz.classList.add('listo');
 
-  if (!loader) {
-    listo();
-  } else if (reduce) {
+  if (loader && !hayEntrada) {
     loader.remove();
-    listo();
-  } else if (yaVista) {
-    loader.style.transition = 'opacity .5s';
-    loader.style.opacity = '0';
-    listo();
-    setTimeout(() => loader.remove(), 600);
-  } else {
+  } else if (hayEntrada) {
     const sets = loader.querySelectorAll('.set');
     const capa = document.getElementById('capa');
     const contador = document.getElementById('pct');
