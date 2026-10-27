@@ -54,12 +54,15 @@
 
 html { background: var(--blanco); }
 
+/* El gris va solo en el contenido: bajo el pie nunca puede asomar */
+main { flex: 1 0 auto; background: var(--fondo); }
+
 body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
   min-height: 100svh;
-  background: var(--fondo);
+  background: var(--blanco);
   color: var(--tinta);
   font-family: var(--ui);
   font-size: 12px;
@@ -445,7 +448,9 @@ header nav a[aria-current="page"] { color: var(--verde); }
 /* ---------- Quiénes somos ---------- */
 .qv {
   display: grid;
+  align-content: start;
   gap: clamp(48px, 9svh, 96px);
+  min-height: calc(100svh - var(--head));
   padding: 28px var(--grr) clamp(72px, 12svh, 128px) var(--gl);
 }
 
