@@ -329,6 +329,14 @@ footer{gap:clamp(120px,20svh,240px)}
   .abajo .sub{max-width:34ch}
 }
 @media(min-aspect-ratio:1/1) and (min-width:900px){.hero video{object-position:center 60%}}
+@media(min-width:1120px){.cookies p{white-space:nowrap}.cookies{flex-wrap:nowrap}}
+/* cookies en ordenador: abajo a la izquierda, con el margen de la página */
+@media(min-width:1120px){
+  .cookies{left:var(--pad);right:auto;margin:0;width:max-content;max-width:min(760px,calc(100vw - 2*var(--pad)));bottom:16px}
+  main.hero~.cookies{bottom:calc(35px + 12px)}
+}
+.der-nav{display:none}
+@media(min-width:1120px){.der-nav{display:flex}.der-nav a{display:flex;align-items:center;padding:0 8px;line-height:1}.der-nav a:hover{background:var(--fondo)}.menu-btn{display:none}header nav a[aria-current="page"]{color:var(--verde)}}
 </style>
 
 </head>
@@ -342,8 +350,9 @@ footer{gap:clamp(120px,20svh,240px)}
 </div>
 
 <header>
-  <nav aria-label="Principal"><a href="#contacto">Contacto</a></nav>
+  <nav aria-label="Principal"><a href="quienes-somos.html">Quiénes somos</a><a href="#contacto">Contacto</a></nav>
   <a class="logo" href="#inicio">BASK STUDIO</a>
+  <nav class="der-nav" aria-label="Secundaria"><a href="https://www.instagram.com/bask3d/" target="_blank" rel="noopener">Instagram</a></nav>
   <button type="button" class="der menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="mt">Menú</span><span class="ham" aria-hidden="true"></span></button>
 </header>
 
@@ -374,7 +383,7 @@ footer{gap:clamp(120px,20svh,240px)}
 
 
 <div class="cookies" id="cookies" role="region" aria-label="Cookies">
-  <p id="ck-d">Cookies recién impresas: solo las necesarias, a 0,2 mm por capa y sin soportes.</p>
+  <p id="ck-d">¿Aceptas cookies? Solo las necesarias.</p>
   <div class="bt"><button type="button" class="si" data-c="si">Aceptar</button><button type="button" data-c="no">Solo necesarias</button></div>
 </div>
 
