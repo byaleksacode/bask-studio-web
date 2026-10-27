@@ -337,6 +337,13 @@ footer{gap:clamp(120px,20svh,240px)}
 }
 .der-nav{display:none}
 @media(min-width:1120px){.der-nav{display:flex}.der-nav a{display:flex;align-items:center;padding:0 8px;line-height:1}.der-nav a:hover{background:var(--fondo)}.menu-btn{display:none}header nav a[aria-current="page"]{color:var(--verde)}}
+/* ===== botón ¿Hablamos? en la cabecera y fondo al abrir el menú (desenfoque + velo) ===== */
+.der-grupo{display:flex;align-items:stretch}
+.hablamos{display:flex;align-items:center;padding:0 14px;background:var(--verde);color:#FAF9F5;font:600 13px/1 var(--ui);letter-spacing:-.01em;transition:background .3s}
+.hablamos:hover{background:#004a2c}
+.m-velo{display:block;top:var(--head);opacity:0;visibility:hidden;background:rgba(20,22,20,.3);-webkit-backdrop-filter:blur(4px);backdrop-filter:blur(4px);transition:opacity .6s var(--ease),visibility 0s .6s}
+.menu-abierto .m-velo{opacity:1;visibility:visible;transition:opacity .6s var(--ease)}
+@media(min-width:1120px){.m-velo{background:rgba(20,22,20,.22);-webkit-backdrop-filter:blur(7px);backdrop-filter:blur(7px)}}
 </style>
 
 </head>
@@ -352,8 +359,7 @@ footer{gap:clamp(120px,20svh,240px)}
 <header>
   <nav aria-label="Principal"><a href="quienes-somos.html">Quiénes somos</a><a href="#contacto">Contacto</a></nav>
   <a class="logo" href="#inicio">BASK STUDIO</a>
-  <nav class="der-nav" aria-label="Secundaria"><a href="https://www.instagram.com/bask3d/" target="_blank" rel="noopener">Instagram</a></nav>
-  <button type="button" class="der menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="mt">Menú</span><span class="ham" aria-hidden="true"></span></button>
+  <div class="der-grupo"><nav class="der-nav" aria-label="Secundaria"><a href="https://www.instagram.com/bask3d/" target="_blank" rel="noopener">Instagram</a></nav><a class="hablamos" href="#contacto">¿Hablamos?</a><button type="button" class="der menu-btn" id="menuBtn" aria-expanded="false" aria-controls="menu"><span class="mt">Menú</span><span class="ham" aria-hidden="true"></span></button></div>
 </header>
 
 <div class="m-velo" id="mvelo"></div>
