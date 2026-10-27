@@ -660,3 +660,19 @@ body.menu-abierto .cookies { opacity: 0; pointer-events: none; }
   .cookies { transform: none; }
 }
 
+/* ---------- Transición entre páginas ----------
+   Cambio de página con un fundido corto y la cabecera fija. Chrome, Edge y Safari 18.2 o
+   superior la aplican; en el resto de navegadores la página cambia sin transición. */
+@view-transition { navigation: auto; }
+
+header { view-transition-name: cabecera; }
+
+::view-transition-old(root) { animation: 180ms linear both pagina-sale; }
+::view-transition-new(root) { animation: 420ms var(--ease) 60ms both pagina-entra; }
+
+@keyframes pagina-sale { to { opacity: 0; } }
+@keyframes pagina-entra { from { opacity: 0; transform: translateY(10px); } }
+
+@media (prefers-reduced-motion: reduce) {
+  @view-transition { navigation: none; }
+}
