@@ -6,6 +6,13 @@
   const body = document.body;
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
+  /* Desplazamiento suave, como en GESTE (se desactiva con «Reducir movimiento») */
+  const lenis = (window.Lenis && !reduce) ? new window.Lenis({ duration: 1.2 }) : null;
+  if (lenis) {
+    const latido = (t) => { lenis.raf(t); requestAnimationFrame(latido); };
+    requestAnimationFrame(latido);
+  }
+
   /* Lectura y escritura seguras: el navegador puede bloquear el almacenamiento */
   const guardado = {
     leer(area, clave) { try { return window[area].getItem(clave); } catch (e) { return null; } },
@@ -111,7 +118,8 @@
     document.querySelectorAll('a[href="#contacto"]').forEach((enlace) => {
       enlace.addEventListener('click', (e) => {
         e.preventDefault();
-        pie.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' });
+        if (lenis) lenis.scrollTo(pie, { offset: pie.offsetHeight - innerHeight });
+        else pie.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'end' });
       });
     });
   }
@@ -120,21 +128,57 @@
   const tienda = document.getElementById('tienda');
 
   if (tienda) {
-    const botones = tienda.querySelectorAll('.ti-vista button');
+    const botones = document.querySelectorAll('.ti-vista button');
+    const grid = document.getElementById('ti-grid');
+
+    /* La cuadrícula no tiene principio ni fin: se repite dos veces más y, al pasar de una
+       copia a otra, el scroll salta sin que se note. */
+    const copias = [grid.cloneNode(true), grid.cloneNode(true)];
+    copias.forEach((copia) => {
+      copia.removeAttribute('id');
+      copia.setAttribute('aria-hidden', 'true');
+      copia.querySelectorAll('[id]').forEach((el) => el.removeAttribute('id'));
+      copia.querySelectorAll('a').forEach((a) => a.setAttribute('tabindex', '-1'));
+    });
+    grid.before(copias[0]);
+    grid.after(copias[1]);
+
+    const alto = () => grid.offsetHeight;
+    const enBucle = () => tienda.dataset.vista === 'cuadricula';
+    let saltando = false;
+    const irA = (y) => {
+      saltando = true;
+      if (lenis) {
+        lenis.resize();
+        lenis.scrollTo(y, { immediate: true, force: true });
+      } else {
+        scrollTo(0, y);
+      }
+      saltando = false;
+    };
+    const colocar = () => { if (enBucle()) irA(alto()); };
+    const vigilar = (y) => {
+      if (saltando || !enBucle()) return;
+      const h = alto();
+      if (y >= 2 * h) irA(y - h);
+      else if (y < h * 0.25) irA(y + h);
+    };
+    if (lenis) lenis.on('scroll', ({ scroll }) => vigilar(scroll));
+    else addEventListener('scroll', () => vigilar(scrollY), { passive: true });
+
     const ponerVista = (vista) => {
       tienda.dataset.vista = vista;
       botones.forEach((b) => b.setAttribute('aria-pressed', b.dataset.vista === vista));
       const url = new URL(location.href);
       url.searchParams.set('vista', vista);
       history.replaceState(null, '', url);
+      if (vista === 'cuadricula') requestAnimationFrame(colocar);
+      else irA(0);
     };
     const inicial = new URLSearchParams(location.search).get('vista');
-    if (inicial === 'indice') ponerVista('indice');
+    ponerVista(inicial === 'indice' ? 'indice' : 'cuadricula');
+    addEventListener('load', colocar);
     botones.forEach((b) => b.addEventListener('click', () => ponerVista(b.dataset.vista)));
-    /* Desde el índice, un nombre lleva a su producto en la cuadrícula */
-    tienda.querySelectorAll('.ti-indice a').forEach((enlace) => {
-      enlace.addEventListener('click', () => ponerVista('cuadricula'));
-    });
   }
 
   /* ---------- Cesta ----------
@@ -164,6 +208,7 @@
     const pedir = document.getElementById('cestaPedir');
 
     const abrirCesta = (abrir) => {
+      raiz.style.setProperty('--cesta-alto', panel.offsetHeight + 'px');
       body.classList.toggle('cesta-abierta', abrir);
       botonCesta.setAttribute('aria-expanded', abrir);
       panel.setAttribute('aria-hidden', !abrir);

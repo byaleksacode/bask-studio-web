@@ -129,6 +129,7 @@ html:not(.intro) .loader { display: none; }
 .loader .set span:nth-child(3) b { transition-delay: .1s; }
 .loader .set.on b { transform: none; }
 .loader .set.off b { transform: translateY(-105%); transition-duration: .55s; }
+.loader .set.marca { display: flex; gap: .28em; }
 .loader .set.marca b { font-weight: 600; letter-spacing: -.04em; }
 
 .loader .capa {

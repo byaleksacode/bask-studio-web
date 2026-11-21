@@ -75,6 +75,37 @@
     </div>
   </section>
 
+  <section class="pr-tecnica" aria-labelledby="ficha-tecnica">
+    <h2 class="pr-tec-tit" id="ficha-tecnica">Muestrario de materiales</h2>
+    <div class="pr-planos">
+      <figure><img src="assets/iconos/muestrario.svg" alt="" width="200" height="200"><figcaption>Perspectiva</figcaption></figure>
+      <figure><img src="assets/planos/muestrario-planta.svg" alt="" width="200" height="200"><figcaption>Planta</figcaption></figure>
+      <figure><img src="assets/planos/muestrario-alzado.svg" alt="" width="200" height="200"><figcaption>Alzado</figcaption></figure>
+      <figure><img src="assets/planos/muestrario-perfil.svg" alt="" width="200" height="200"><figcaption>Perfil</figcaption></figure>
+    </div>
+    <div class="pr-tabla">
+      <dl>
+        <div><dt>Nombre</dt><dd>Muestrario de materiales</dd></div>
+        <div><dt>Año</dt><dd>2026</dd></div>
+        <div><dt>Ref.</dt><dd>N.º 003</dd></div>
+        <div><dt>Diseño</dt><dd>BASK 3D</dd></div>
+        <div><dt>Medidas</dt><dd>2 × 8 × 1,2 cm (cada muestra)</dd></div>
+        <div><dt>Medidas del paquete</dt><dd>10 × 12 × 3 cm</dd></div>
+        <div><dt>Peso</dt><dd>40 g</dd></div>
+      </dl>
+      <dl>
+        <div><dt>Colores</dt><dd>Cuatro materiales</dd></div>
+        <div><dt>Uso</dt><dd>Interior</dd></div>
+        <div><dt>Fabricado en</dt><dd>Lasarte-Oria</dd></div>
+        <div><dt>Categoría</dt><dd>Empresas · En stock</dd></div>
+        <div><dt>Montaje</dt><dd>Tornillo central incluido</dd></div>
+        <div><dt>Material</dt><dd>PLA, PETG, TPU y nailon con fibra de carbono</dd></div>
+        <div><dt>Cuidados</dt><dd>No dejar al sol durante horas</dd></div>
+      </dl>
+    </div>
+  </section>
+
+
   <section class="pr-detalle">
     <div class="pr-det-a">
       <img src="assets/iconos/muestrario.svg" alt="" width="200" height="200">
@@ -86,11 +117,38 @@
     </div>
   </section>
 
-  <div class="pr-barra" data-id="muestrario" data-nombre="Muestrario de materiales" data-precio="2900" data-icono="assets/iconos/muestrario.svg">
-    <p class="pr-precio">29 € <span>(IVA incl.)</span></p>
-    <button type="button" class="pr-anadir" id="prAnadir">Añadir a la cesta</button>
-  </div>
+
+  <section class="pr-mas" aria-labelledby="te-interesa">
+    <h2 class="pr-mas-tit" id="te-interesa">También te puede interesar</h2>
+    <ul class="pr-otros">
+      <li><a class="pr-otro" href="llavero-nfc">
+        <span class="pr-otro-foto"><img src="assets/iconos/llavero-nfc.svg" alt="" width="200" height="200"></span>
+        <span class="ti-pie"><span class="ti-nom">Llavero NFC</span><span>desde 4,90 €</span></span>
+      </a></li>
+      <li><a class="pr-otro" href="soporte-movil">
+        <span class="pr-otro-foto"><img src="assets/iconos/soporte-movil.svg" alt="" width="200" height="200"></span>
+        <span class="ti-pie"><span class="ti-nom">Soporte de móvil</span><span>14,90 €</span></span>
+      </a></li>
+      <li><a class="pr-otro" href="placa-senaletica">
+        <span class="pr-otro-foto"><img src="assets/iconos/placa-senaletica.svg" alt="" width="200" height="200"></span>
+        <span class="ti-pie"><span class="ti-nom">Placa de señalética</span><span>desde 12 €</span></span>
+      </a></li>
+      <li><a class="pr-otro" href="maceta">
+        <span class="pr-otro-foto"><img src="assets/iconos/maceta.svg" alt="" width="200" height="200"></span>
+        <span class="ti-pie"><span class="ti-nom">Maceta facetada</span><span>16,90 €</span></span>
+      </a></li>
+      <li><a class="pr-otro" href="organizador-escritorio">
+        <span class="pr-otro-foto"><img src="assets/iconos/organizador-escritorio.svg" alt="" width="200" height="200"></span>
+        <span class="ti-pie"><span class="ti-nom">Organizador de escritorio</span><span>19,90 €</span></span>
+      </a></li>
+    </ul>
+  </section>
 </main>
+
+<div class="pr-barra" data-id="muestrario" data-nombre="Muestrario de materiales" data-precio="2900" data-icono="assets/iconos/muestrario.svg">
+  <p class="pr-precio">29 € <span>(IVA incl.)</span></p>
+  <button type="button" class="pr-anadir" id="prAnadir">Añadir a la cesta</button>
+</div>
 
 <div class="cookies" id="cookies" role="region" aria-label="Cookies">
   <p>¿Aceptas <a href="cookies">cookies</a>? Solo las necesarias.</p>
@@ -111,6 +169,7 @@
   </div>
 </footer>
 
+<script src="assets/js/lenis.min.js"></script>
 <script src="app.js"></script>
 </body>
 </html>
