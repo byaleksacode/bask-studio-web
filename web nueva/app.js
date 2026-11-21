@@ -116,6 +116,128 @@
     });
   }
 
+  /* ---------- Tienda: vista cuadrícula o índice ---------- */
+  const tienda = document.getElementById('tienda');
+
+  if (tienda) {
+    const botones = tienda.querySelectorAll('.ti-vista button');
+    const ponerVista = (vista) => {
+      tienda.dataset.vista = vista;
+      botones.forEach((b) => b.setAttribute('aria-pressed', b.dataset.vista === vista));
+      const url = new URL(location.href);
+      url.searchParams.set('vista', vista);
+      history.replaceState(null, '', url);
+    };
+    const inicial = new URLSearchParams(location.search).get('vista');
+    if (inicial === 'indice') ponerVista('indice');
+    botones.forEach((b) => b.addEventListener('click', () => ponerVista(b.dataset.vista)));
+    /* Desde el índice, un nombre lleva a su producto en la cuadrícula */
+    tienda.querySelectorAll('.ti-indice a').forEach((enlace) => {
+      enlace.addEventListener('click', () => ponerVista('cuadricula'));
+    });
+  }
+
+  /* ---------- Cesta ----------
+     De momento no hay pago en la web: «Hacer pedido» prepara un correo con la cesta. */
+  const botonCesta = document.getElementById('cestaBtn');
+
+  if (botonCesta) {
+    const CLAVE = 'bask-cesta';
+    const euros = (c) => (c / 100).toLocaleString('es-ES', { minimumFractionDigits: c % 100 ? 2 : 0 }) + ' €';
+    const leerCesta = () => { try { return JSON.parse(guardado.leer('localStorage', CLAVE)) || []; } catch (e) { return []; } };
+    let cesta = leerCesta();
+
+    body.insertAdjacentHTML('beforeend', `
+      <div class="cesta-velo" id="cestaVelo"></div>
+      <aside class="cesta" id="cesta" aria-label="Cesta" aria-hidden="true">
+        <ul class="cesta-lista" id="cestaLista"></ul>
+        <div class="cesta-pie">
+          <p class="cesta-nota">Envío en 2-3 días. Para pedidos grandes, escríbenos a info@bask3d.com</p>
+          <button type="button" class="cesta-cerrar" id="cestaCerrar" aria-label="Cerrar cesta">×</button>
+          <div class="cesta-total"><span>Total</span><a class="cesta-pedir" id="cestaPedir" href="#"><span id="cestaTotal">0 €</span><span>Hacer pedido</span></a></div>
+        </div>
+      </aside>`);
+
+    const panel = document.getElementById('cesta');
+    const lista = document.getElementById('cestaLista');
+    const contador = document.getElementById('cestaN');
+    const pedir = document.getElementById('cestaPedir');
+
+    const abrirCesta = (abrir) => {
+      body.classList.toggle('cesta-abierta', abrir);
+      botonCesta.setAttribute('aria-expanded', abrir);
+      panel.setAttribute('aria-hidden', !abrir);
+    };
+
+    const pintar = () => {
+      guardado.poner('localStorage', CLAVE, JSON.stringify(cesta));
+      const unidades = cesta.reduce((n, p) => n + p.cant, 0);
+      const total = cesta.reduce((n, p) => n + p.cant * p.precio, 0);
+      contador.hidden = unidades === 0;
+      contador.textContent = unidades;
+      document.getElementById('cestaTotal').textContent = euros(total);
+      pedir.setAttribute('aria-disabled', unidades === 0);
+
+      lista.innerHTML = cesta.length ? cesta.map((p, i) => `
+        <li class="cesta-item">
+          <img src="${p.icono}" alt="">
+          <div><h3>${p.nombre}</h3><p class="ci-var">${p.variante ? p.variante + '<br>' : ''}${euros(p.precio)}</p></div>
+          <div class="ci-der">
+            <button type="button" class="ci-quitar" data-i="${i}">Quitar</button>
+            <div class="ci-cant"><span>Cant.:</span><button type="button" data-i="${i}" data-d="-1" aria-label="Quitar una">−</button><span>${p.cant}</span><button type="button" data-i="${i}" data-d="1" aria-label="Añadir una">+</button></div>
+          </div>
+        </li>`).join('') : '<li class="cesta-vacia">Tu cesta está vacía.</li>';
+
+      const lineas = cesta.map((p) => `${p.cant} × ${p.nombre}${p.variante ? ' (' + p.variante + ')' : ''}: ${euros(p.cant * p.precio)}`);
+      const texto = `Hola, quiero hacer este pedido:\n\n${lineas.join('\n')}\n\nTotal: ${euros(total)}\n\nNombre:\nDirección de envío:\nTeléfono:`;
+      pedir.href = 'mailto:info@bask3d.com?subject=' + encodeURIComponent('Pedido de la tienda') + '&body=' + encodeURIComponent(texto);
+    };
+
+    lista.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (!b) return;
+      const i = Number(b.dataset.i);
+      if (b.classList.contains('ci-quitar')) cesta.splice(i, 1);
+      else {
+        cesta[i].cant += Number(b.dataset.d);
+        if (cesta[i].cant < 1) cesta.splice(i, 1);
+      }
+      pintar();
+    });
+
+    botonCesta.addEventListener('click', () => abrirCesta(!body.classList.contains('cesta-abierta')));
+    document.getElementById('cestaCerrar').addEventListener('click', () => abrirCesta(false));
+    document.getElementById('cestaVelo').addEventListener('click', () => abrirCesta(false));
+    addEventListener('keydown', (e) => { if (e.key === 'Escape') abrirCesta(false); });
+    addEventListener('storage', (e) => { if (e.key === CLAVE) { cesta = leerCesta(); pintar(); } });
+
+    /* Ficha de producto: elegir color y añadir a la cesta */
+    const barra = document.querySelector('.pr-barra');
+    if (barra) {
+      const colores = barra.querySelectorAll('.pr-color');
+      const nombreVariante = document.getElementById('prVar');
+      let variante = colores.length ? colores[0].dataset.variante : '';
+
+      colores.forEach((c) => c.addEventListener('click', () => {
+        variante = c.dataset.variante;
+        colores.forEach((o) => o.setAttribute('aria-pressed', o === c));
+        nombreVariante.textContent = ' — ' + variante;
+      }));
+
+      const anadir = document.getElementById('prAnadir');
+      anadir.addEventListener('click', () => {
+        const { id, nombre, precio, icono } = barra.dataset;
+        const existente = cesta.find((p) => p.id === id && p.variante === variante);
+        if (existente) existente.cant += 1;
+        else cesta.push({ id, nombre, variante, precio: Number(precio), icono, cant: 1 });
+        pintar();
+        abrirCesta(true);
+      });
+    }
+
+    pintar();
+  }
+
   /* ---------- Aparición de bloques al entrar en pantalla ---------- */
   const observador = new IntersectionObserver((entradas) => {
     entradas.forEach((e) => {

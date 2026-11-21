@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#FFFEF8">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="description" content="Muestrario con cuatro materiales de impresión 3D: PLA, PETG, TPU y nailon con fibra de carbono.">
+<link rel="preload" href="assets/fonts/inter-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-tight-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="assets/fonts/inter-tight-latin-600-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="canonical" href="https://bask3d.com/muestrario">
+<link rel="stylesheet" href="estilos.css">
+<title>Muestrario de materiales</title>
+</head>
+<body>
+<header>
+  <nav aria-label="Principal"><a href="servicios">Servicios</a><a href="quienes-somos">Quiénes somos</a><a href="#contacto">Contacto</a></nav>
+  <a class="logo" href="./"><img src="assets/logo-bask3d.svg" alt="BASK 3D" width="269" height="41"></a>
+  <div class="der-grupo">
+    <nav aria-label="Secundaria"><a href="https://www.instagram.com/bask3d/" target="_blank" rel="noopener">Instagram</a></nav>
+    <button type="button" class="cesta-btn" id="cestaBtn" aria-label="Abrir cesta" aria-expanded="false" aria-controls="cesta"><span class="cesta-txt">Cesta</span><svg class="cesta-ico" viewBox="0 0 16 18" aria-hidden="true"><path d="M2.5 5.5h11l-.8 11h-9.4z" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/><path d="M5.5 7V4.5a2.5 2.5 0 0 1 5 0V7" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg><span class="cesta-n" id="cestaN" hidden></span></button>
+    <a class="hablamos" href="mailto:info@bask3d.com?subject=Quiero%20hablar%20de%20una%20pieza">¿Hablamos?</a>
+    <button type="button" class="menu-btn" id="menuBtn" aria-label="Abrir menú" aria-expanded="false" aria-controls="menu"><span class="ham" aria-hidden="true"></span></button>
+  </div>
+</header>
+
+<div class="m-velo" id="mvelo"></div>
+<div class="menu" id="menu" aria-hidden="true">
+  <div class="m-in">
+    <nav class="m-nav" aria-label="Menú">
+      <ul class="m-grande">
+        <li><a href="servicios">Servicios</a></li>
+        <li><a href="quienes-somos">Quiénes somos</a></li>
+        <li><a href="https://www.instagram.com/bask3d/" target="_blank" rel="noopener">Instagram</a></li>
+        <li><a href="mailto:info@bask3d.com">info@bask3d.com</a></li>
+      </ul>
+    </nav>
+  </div>
+</div>
+
+<main class="pr" id="producto">
+  <!-- Textos, medidas y precios provisionales: pendientes de confirmar con BASK 3D -->
+  <section class="pr-intro">
+    <p class="pr-intro-t">Presentamos MUESTRARIO DE MATERIALES</p>
+  </section>
+
+  <section class="pr-cuerpo">
+    <div class="pr-foto"><img src="assets/iconos/muestrario.svg" alt="Muestrario de materiales" width="200" height="200"></div>
+    <div class="pr-info">
+      <h1 class="pr-tit">Muestrario de materiales<span class="pr-var" id="prVar"></span><br>Toca los materiales antes de encargar tu pieza.</h1>
+      <div class="pr-bloques">
+        <div class="pr-bloque">
+          <h2>Ficha</h2>
+          <ul>
+          <li>4 muestras de 2 × 8 cm</li>
+          <li>PLA, PETG, TPU flexible y nailon con fibra de carbono</li>
+          <li>Tornillo central para abrirlo en abanico</li>
+          <li>Cada muestra lleva grabado su material</li>
+          <li>Impreso en nuestro taller</li>
+          </ul>
+        </div>
+        <div class="pr-bloque">
+          <h2>Descripción</h2>
+          <p>Para elegir bien el material de una pieza hay que verlo y tocarlo. El muestrario reúne los cuatro materiales que más usamos, con su acabado real, para que compares rigidez, flexibilidad y superficie.</p>
+        </div>
+        <div class="pr-bloque">
+          <h2>Disponibilidad</h2>
+          <p>En stock. Envío en 2-3 días.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pr-detalle">
+    <div class="pr-det-a">
+      <img src="assets/iconos/muestrario.svg" alt="" width="200" height="200">
+      <p>RIGIDEZ, FLEXIBILIDAD Y ACABADO REALES — Si después nos encargas una pieza, te descontamos el muestrario.</p>
+    </div>
+    <div class="pr-det-b">
+      <p class="pr-det-lema">Piezas bien hechas, a un precio justo y con trato directo.</p>
+      <a class="pr-volver" href="tienda">Volver a la tienda</a>
+    </div>
+  </section>
+
+  <div class="pr-barra" data-id="muestrario" data-nombre="Muestrario de materiales" data-precio="2900" data-icono="assets/iconos/muestrario.svg">
+    <p class="pr-precio">29 € <span>(IVA incl.)</span></p>
+    <button type="button" class="pr-anadir" id="prAnadir">Añadir a la cesta</button>
+  </div>
+</main>
+
+<div class="cookies" id="cookies" role="region" aria-label="Cookies">
+  <p>¿Aceptas <a href="cookies">cookies</a>? Solo las necesarias.</p>
+  <div class="bt"><button type="button" data-c="si">Aceptar</button><button type="button" data-c="no">Solo necesarias</button></div>
+</div>
+
+<footer id="contacto">
+  <div class="f-cab rev">
+    <p class="f-marca" aria-label="BASK 3D">BASK<br>3D</p>
+  </div>
+  <div class="f-bajo rev">
+    <div class="f-grid">
+      <div class="f-emp">BASK 3D, S.L.<br>Lasarte-Oria, Gipuzkoa<br>© 2026</div>
+      <div class="f-adit">Fabricación aditiva</div>
+      <div class="f-links"><a href="mailto:info@bask3d.com">info@bask3d.com</a><br><a href="https://www.instagram.com/bask3d/" target="_blank" rel="noopener">Instagram</a><br><a href="https://es.linkedin.com/company/bask3d" target="_blank" rel="noopener">LinkedIn</a></div>
+    </div>
+    <nav class="f-legal" aria-label="Información legal"><a href="aviso-legal">Aviso legal</a><a href="privacidad">Privacidad</a><a href="cookies">Cookies</a></nav>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
