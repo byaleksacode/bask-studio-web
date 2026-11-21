@@ -29,7 +29,7 @@ header,footer{display:flex;justify-content:space-between;align-items:center;gap:
 header{height:42px}
 footer{min-height:35px;padding-top:8px;padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}
 @media(min-width:1120px){header{height:32px}}
-.logo{font-family:var(--gr);font-weight:600;font-size:16px;letter-spacing:-.03em;text-decoration:none}
+.logo{display:flex;align-items:center;text-decoration:none}.logo img{display:block;width:auto;height:13px}
 main{background:var(--fondo);display:grid;align-content:center;justify-items:center;text-align:center;gap:clamp(18px,4svh,36px);padding:32px var(--grr) 40px var(--gl)}
 .k{font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--verde)}
 
@@ -87,7 +87,7 @@ h1{font-family:var(--gr);font-weight:400;font-size:clamp(28px,7vw,52px);line-hei
 </head>
 <body>
 <div class="app">
-  <header><a class="logo" href="/">BASK 3D</a><span>Error 404</span></header>
+  <header><a class="logo" href="/"><img src="/assets/logo-bask3d.svg" alt="BASK 3D" width="269" height="41"></a><span>Error 404</span></header>
 
   <main>
     <p class="k rv" style="animation-delay:.2s">Impresión fallida</p>

@@ -1,4 +1,4 @@
-/* BASK STUDIO · hoja de estilos común a todas las páginas */
+/* BASK 3D · hoja de estilos común a todas las páginas */
 
 /* ---------- Tipografías (alojadas en la propia web, licencia SIL OFL) ---------- */
 @font-face {
@@ -181,11 +181,8 @@ header nav a[aria-current="page"] { color: var(--verde); }
 .logo {
   display: flex;
   align-items: center;
-  font-family: var(--gr);
-  font-weight: 600;
-  font-size: 16px;
-  letter-spacing: -.03em;
 }
+.logo img { display: block; width: auto; height: 13px; }
 
 .der-grupo { display: flex; align-items: stretch; }
 
