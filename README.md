@@ -1,6 +1,6 @@
-# BASK STUDIO — web provisional
+# BASK 3D — web provisional
 
-Web de BASK STUDIO (fabricación aditiva, Lasarte-Oria). Sitio estático: no necesita compilar nada.
+Web de BASK 3D (fabricación aditiva, Lasarte-Oria). Sitio estático: no necesita compilar nada.
 
 ## Archivos
 

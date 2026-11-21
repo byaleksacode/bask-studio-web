@@ -1,4 +1,4 @@
-/* BASK STUDIO · comportamiento común a todas las páginas */
+/* BASK 3D · comportamiento común a todas las páginas */
 (function () {
   'use strict';
 
